@@ -1,0 +1,128 @@
+/* Apply ViewAllLoans styles to ViewAllPayments page */
+.view-all-payments {
+  padding: 20px;
+  margin-top: 80px;
+  box-sizing: border-box;
+}
+
+.view-all-payments h2 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #003f8c;
+}
+
+/* Scroll wrapper for horizontal tables */
+.view-all-payments-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Table */
+.view-all-payments table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  min-width: 1000px; /* ensure columns fit and trigger horizontal scroll on small screens */
+}
+
+.view-all-payments table,
+.view-all-payments th,
+.view-all-payments td {
+  border: 1px solid #ddd;
+}
+
+.view-all-payments th,
+.view-all-payments td {
+  padding: 8px;
+  text-align: left;
+}
+
+.view-all-payments th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.view-all-payments tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.view-all-payments tr:hover {
+  background-color: #6fcdfd38;
+  color: #000;
+}
+
+/* Status and error */
+.view-all-payments .error {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Default (non-icon) buttons (kept for backwards compatibility) */
+.view-all-payments button {
+  padding: 5px 10px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.view-all-payments button:hover {
+  background-color: #c9302c;
+}
+
+/* Actions column layout (icon buttons) */
+.view-all-payments .actions-cell {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Icon buttons for actions to match ViewAllLoans */
+.view-all-payments .icon-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+
+/* per-action colors (adjust as needed where icons are used) */
+.view-all-payments .icon-btn.view { color: #0dcaf0; }    /* info */
+.view-all-payments .icon-btn.edit { color: #ffc107; }    /* warning */
+.view-all-payments .icon-btn.delete { color: #dc3545; }  /* danger */
+
+.view-all-payments .icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* ensure SVG icons are a sensible size */
+.view-all-payments .icon-btn svg {
+  font-size: 18px;
+}
+
+/* Sequence column if added later */
+.view-all-payments .seq-col {
+  width: 56px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .view-all-payments table {
+    min-width: 700px;
+  }
+
+  .view-all-payments {
+    padding: 12px;
+  }
+}

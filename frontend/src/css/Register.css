@@ -1,0 +1,108 @@
+/* Container for the Register component */
+.Register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e8f4f8; /* Lighter background for a cleaner look */
+  font-family: 'Arial', sans-serif;
+}
+
+.Register h1 {
+  font-size: 2.5rem;
+  margin-bottom: 700px;
+  align-items: center;
+  color: #2e3b4e; /* Darker text color for better contrast */
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+form {
+  background-color: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  max-width: 100%;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+form:hover {
+  transform: translateY(-10px); /* Subtle hover effect for the form */
+}
+
+form div {
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  display: block;
+  color: #444;
+  font-weight: 500;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box; /* Ensures padding is included in the width */
+}
+
+input:focus {
+  border-color: #4c9aff; /* Soft blue focus border */
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #4c9aff; /* Vibrant blue */
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #3872e0; /* Slightly darker blue on hover */
+  transform: scale(1.05); /* Button scaling effect on hover */
+}
+
+button:active {
+  background-color: #1d58c1; /* Even darker blue on click */
+  transform: scale(1); /* Removes scaling on click */
+}
+
+form p {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+form p a {
+  text-decoration: none;
+  color: #4c9aff; /* Link color */
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+form p a:hover {
+  color: #3872e0; /* Hover effect for the link */
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 30px 20px;
+    width: 90%;
+  }
+}

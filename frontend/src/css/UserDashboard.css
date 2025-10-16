@@ -1,0 +1,99 @@
+/* General Dashboard Styling */
+.user-dashboard {
+  padding: 20px;
+  text-align: center;
+  background-color: #f4f6f9; /* Light background for the dashboard */
+  min-height: 100vh; /* Ensure the dashboard takes up the full viewport height */
+  font-family: 'Arial', sans-serif;
+}
+
+.user-dashboard h1 {
+  margin-bottom: 20px;
+  font-size: 2.5em;
+  color: #2c3e50; /* Darker color for the heading */
+  font-weight: bold;
+}
+
+/* User Actions Section */
+.user-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.user-action {
+  display: inline-block;
+  padding: 12px 20px;
+  background-color: #3498db; /* Blue background for buttons */
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow for a button effect */
+}
+
+.user-action:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: translateY(-3px); /* Slight lift effect */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+.user-action:active {
+  background-color: #1e6a8c; /* Even darker blue on click */
+  transform: translateY(1px); /* Slight press effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Reduce shadow on click */
+}
+
+.user-action:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* Focus ring for accessibility */
+}
+
+/* User Profile Section */
+.user-profile {
+  margin: 0 auto 30px auto;
+  padding: 20px;
+  max-width: 600px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #ffffff; /* White background for the profile card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
+}
+
+.user-profile h2 {
+  margin-bottom: 15px;
+  font-size: 1.8em;
+  color: #34495e; /* Slightly darker color for the subheading */
+}
+
+.user-profile p {
+  margin: 10px 0;
+  font-size: 1.1em;
+  color: #555; /* Neutral color for text */
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .user-profile {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .user-profile h2 {
+    font-size: 1.5em;
+  }
+
+  .user-profile p {
+    font-size: 1em;
+  }
+
+  .user-action {
+    font-size: 0.9em;
+    padding: 10px 15px;
+  }
+}

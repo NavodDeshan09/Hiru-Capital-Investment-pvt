@@ -1,0 +1,97 @@
+.add-loan {
+    /* unify widths and prevent horizontal overflow from dropdowns */
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 80px;
+    padding: 20px;
+    border: 1px solid #a6e1ff;
+    border-radius: 8px;
+    background-color: #007bff56;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box; /* NEW */
+    overflow-x: hidden;     /* NEW - stop horizontal scrollbar caused by dropdowns */
+  }
+  
+  .add-loan h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #003f8c;
+  }
+  
+  /* Ensure form uses full available width */
+  .add-loan form {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box; /* NEW */
+  }
+  
+  .add-loan form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .add-loan form label {
+    margin-bottom: 5px;
+  }
+  
+  /* Make inputs, selects and textareas responsive */
+  .add-loan form input,
+  .add-loan form select,
+  .add-loan form textarea {
+    width: 100%;            /* NEW - fill container */
+    max-width: 100%;        /* NEW */
+    box-sizing: border-box; /* NEW */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #007bff50;
+    display: block;
+  }
+  
+  /* Improve select appearance and avoid native dropdown forcing overflow */
+  .add-loan form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    padding-right: 36px; /* space for custom arrow */
+    background-image:
+      linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.25) 50%),
+      linear-gradient(135deg, rgba(0,0,0,0.25) 50%, transparent 50%);
+    background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+  }
+  
+  /* Smaller screens adjustments */
+  @media (max-width: 480px) {
+    .add-loan {
+      margin-top: 90px;
+      padding: 16px;
+    }
+  
+    .add-loan form input,
+    .add-loan form select,
+    .add-loan form textarea {
+      padding: 8px;
+      font-size: 0.95rem;
+    }
+  }
+
+  .status-message {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .status-message.success {
+    color: green;
+  }
+  
+  .status-message.error {
+    color: red;
+  }

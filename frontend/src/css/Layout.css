@@ -1,0 +1,104 @@
+/* ---- Desktop Layout ---- */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar: fixed width */
+.sidebar-nav {
+  width: 220px;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #007bff, #2a5298);
+  color: white;
+}
+
+/* Right side main area */
+.layout-main-container {
+  display: block;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  background: #f7f8fa;
+  overflow-y: auto;
+  /* Offset the main content to make room for fixed sidebar */
+  margin-left: 220px;
+  transition: margin-left 0.25s ease;
+}
+
+.layout-main {
+  flex: 1;
+  padding: 20px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Make form controls wider and responsive across pages + modal */
+.layout-main input,
+.layout-main select,
+.layout-main textarea,
+.modal input,
+.modal select,
+.modal textarea {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Optional: slightly larger inputs for better usability */
+.layout-main input,
+.layout-main select,
+.layout-main textarea {
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* ---- Responsive: Phones ---- */
+@media (max-width: 768px) {
+  .layout-container {
+    flex-direction: row;
+  }
+
+  /* Minimize sidebar on mobile */
+  .sidebar-nav {
+    width: 60px;
+    min-width: 60px;
+    overflow: hidden;
+    transition: width 0.3s;
+  }
+
+  /* Offset main content to account for collapsed sidebar width */
+  .layout-main-container {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+
+  /* Hide text labels only when sidebar is collapsed */
+  .sidebar-nav.collapsed .sidebar-list span {
+    display: none;
+  }
+
+  /* Ensure labels show when sidebar is open (overlay) */
+  .sidebar-nav.open .sidebar-list span {
+    display: inline-block;
+  }
+
+  .navbar-brand {
+    display: inline;
+  }
+
+  /* Main content takes full width */
+  .layout-main-container {
+    width: 100%;
+  }
+
+  .layout-main {
+    padding: 8px;
+  }
+
+  /* When the sidebar is opened as an overlay, remove the left offset so the overlay covers content */
+  body.sidebar-open .layout-main-container {
+    margin-left: 0;
+    width: 100%;
+  }
+}

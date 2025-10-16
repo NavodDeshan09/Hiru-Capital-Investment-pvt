@@ -1,0 +1,228 @@
+.ViewAllLoans {
+  padding: 20px;
+  width: 100%;
+  margin-top: 80px;
+  box-sizing: border-box;
+}
+
+.ViewAllLoans-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden; /* prevent vertical scroll inside wrapper */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on mobile */
+}
+
+.ViewAllLoans table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  min-width: 1200px; /* increased so all columns fit and trigger horizontal scroll */
+  overflow-x: auto;
+}
+
+.ViewAllLoans h1 {
+  text-align: left;
+  margin-bottom: 20px;
+  color: #003f8c;
+}
+
+.ViewAllLoans table, .ViewAllLoans th, .ViewAllLoans td {
+  border: 1px solid #ddd;
+}
+
+.ViewAllLoans th, .ViewAllLoans td {
+  padding: 8px;
+  text-align: left;
+}
+
+.ViewAllLoans th {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.ViewAllLoans tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.ViewAllLoans tr:hover {
+  background-color: #6fcdfd38;
+  color: #000000;
+}
+
+.ViewAllLoans .error {
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.ViewAllLoans button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.ViewAllLoans button:hover {
+  background-color: #0056b3;
+}
+
+/* Ensure table remains responsive on small screens */
+@media (max-width: 768px) {
+  .ViewAllLoans table {
+    min-width: 700px; /* reduce min-width for mobile */
+  }
+
+  .ViewAllLoans {
+    padding: 12px;
+  }
+}
+
+/* Modal overlay + modal window */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 25px;
+  box-sizing: border-box;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.modal-close {
+  width: 40px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #003f8c;
+}
+
+/* Modal form layout */
+.modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* two-column inputs to save space */
+  gap: 10px 16px;
+}
+
+.modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.modal-form input,
+.modal-form select {
+  padding: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;
+}
+
+/* Actions row */
+.modal-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Responsive: single-column on small screens */
+@media (max-width: 720px) {
+  .modal-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Read-only view modal fields */
+.view-readonly .view-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.view-readonly .view-field label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #333;
+}
+
+.view-readonly .view-field .value {
+  padding: 10px;
+  background: #f5f7fb;
+  border: 1px solid #e6eefc;
+  border-radius: 4px;
+  color: #0b2540;
+  word-break: break-word;
+}
+
+/* Actions column layout */
+.ViewAllLoans .actions-cell {
+  display: flex;
+  position: relative;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Icon buttons for actions */
+.ViewAllLoans .icon-btn {
+  background: transparent;
+  border: none;
+  padding: 6px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.12s ease;
+}
+
+/* per-action colors */
+.ViewAllLoans .icon-btn.view { color: #0dcaf0; }    /* info */
+.ViewAllLoans .icon-btn.edit { color: #ffc107; }    /* warning */
+.ViewAllLoans .icon-btn.delete { color: #dc3545; }  /* danger */
+
+.ViewAllLoans .icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+/* ensure SVG icons are a sensible size */
+.ViewAllLoans .icon-btn svg {
+  font-size: 18px;
+}
+
+.ViewAllLoans .seq-col {
+  width: 56px;
+  text-align: center;
+  font-weight: 600;
+}

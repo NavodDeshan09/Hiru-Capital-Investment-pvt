@@ -1,0 +1,168 @@
+/* Sidebar Container */
+.sidebar-nav {
+  width: 220px;
+  height: 100vh;
+  background: linear-gradient(180deg, #007bff,#007bff);
+  color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;              /* NEW */
+  flex-direction: column;     /* NEW */
+  padding-top: 0;              /* moved to brand */
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Brand Section */
+.navbar-brand {
+  text-align: center;
+  padding: 30px 15px 20px; /* top padding moved here */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* NEW */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* changed: allow link to use full width so inner grid works */
+  gap: 8px;
+}
+
+/* Logo + text as two columns */
+.navbar-logo {
+  display: grid;
+  grid-template-columns: 48px 1fr; /* increased from 36px to 48px */
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  width: 100%; /* allow text to take remaining space */
+}
+
+.sidebar-logo-img {
+  width: 48px;  /* increased from 36px */
+  height: 48px; /* increased from 36px */
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* keep existing navbar-logo text styles minimal (text will sit in second grid column) */
+.navbar-logo-text {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+/* Toggle button (hamburger) */
+.sidebar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 6px;
+  margin-right: 8px;
+}
+
+/* Sidebar List */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1; /* make it fill remaining space below brand */
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  margin: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  color: #ffffff;
+  user-select: none;
+}
+
+.sidebar-item + .sidebar-item {
+  margin-top: 5px;
+}
+
+.sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+}
+
+.sidebar-item:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sidebar-icon {
+  font-size: 20px;
+}
+
+/* Mobile-specific collapsed / open behaviour */
+@media (max-width: 768px) {
+  /* Show hamburger toggle on mobile */
+  .sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* collapsed by default: only a narrow column with the hamburger */
+  .sidebar-nav.collapsed {
+    width: 60px;
+    min-width: 60px;
+    overflow: visible;
+    transition: width 0.25s ease;
+  }
+
+  /* hide full list when collapsed (so only hamburger remains) */
+  .sidebar-nav.collapsed .sidebar-list {
+    display: none;
+  }
+
+  /* hide brand text when collapsed (show icon/logo only) */
+  .sidebar-nav.collapsed .navbar-logo-text {
+    display: none;
+  }
+
+  /* open state: overlay expanded sidebar */
+  .sidebar-nav.open {
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 220px;
+    min-width: 220px;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.25);
+    transition: transform 0.25s ease;
+    transform: translateX(0);
+    background: linear-gradient(180deg, #007bff, #2a5298);
+  }
+
+  .sidebar-nav.open .sidebar-list {
+    display: block;
+  }
+
+  /* When open, show navbar logo (brand) */
+  .sidebar-nav.open .navbar-logo {
+    display: inline-block;
+  }
+
+  /* Slight visual adjustment for the nav to not overlap the top of content */
+  .sidebar-nav.open .navbar-brand {
+    justify-content: flex-start;
+    padding-left: 16px;
+  }
+
+  /* fine tune item spacing while sidebar overlays */
+  .sidebar-nav.open .sidebar-item {
+    margin: 8px 12px;
+  }
+}
+

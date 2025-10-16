@@ -1,0 +1,193 @@
+/* ViewAllUsers.css */
+
+.ViewAllUsers {
+    padding: 20px;
+    margin-top: 20px;
+    box-sizing: border-box;
+  }
+  
+  .ViewAllUsers h1 {
+    text-align: left;
+    margin-bottom: 20px;
+    color: #003f8c;
+  }
+  
+  /* Scroll wrapper for horizontal tables */
+  .ViewAllUsers-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Table */
+  .ViewAllUsers table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    min-width: 1000px; /* ensure columns fit and trigger horizontal scroll on small screens */
+  }
+  
+  .ViewAllUsers table,
+  .ViewAllUsers th,
+  .ViewAllUsers td {
+    border: 1px solid #ddd;
+  }
+  
+  .ViewAllUsers th,
+  .ViewAllUsers td {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .ViewAllUsers th {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .ViewAllUsers tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .ViewAllUsers tr:hover {
+    background-color: #6fcdfd38;
+    color: #000;
+  }
+  
+  /* Status and error */
+  .ViewAllUsers .error {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Actions column layout (icon buttons) */
+  .ViewAllUsers .actions-cell {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  /* Icon buttons for actions to match ViewAllPayments */
+  .ViewAllUsers .icon-btn {
+    background: transparent;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.12s ease, transform 0.12s ease;
+  }
+  
+  /* per-action colors (adjust as needed where icons are used) */
+  .ViewAllUsers .icon-btn.view { color: #0dcaf0; }    /* info */
+  .ViewAllUsers .icon-btn.edit { color: #ffc107; }    /* warning */
+  .ViewAllUsers .icon-btn.delete { color: #dc3545; }  /* danger */
+  
+  .ViewAllUsers .icon-btn:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+    transform: translateY(-2px);
+  }
+  
+  /* ensure SVG icons are a sensible size */
+  .ViewAllUsers .icon-btn svg {
+    font-size: 18px;
+  }
+  
+  /* Sequence column if used */
+  .ViewAllUsers .seq-col {
+    width: 56px;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    .ViewAllUsers table {
+      min-width: 700px;
+    }
+  
+    .ViewAllUsers {
+      padding: 12px;
+    }
+  }
+  
+  /* Modal overlay + modal window */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 18px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal h3 {
+  margin-top: 0;
+  color: #003f8c;
+}
+
+/* Modal form layout */
+.modal-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.modal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Actions row */
+.modal-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Responsive: single-column on small screens */
+@media (max-width: 720px) {
+  .modal-form {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,138 @@
+.add-payment {
+  padding: 20px;
+  box-sizing: border-box;    /* NEW: include padding in width calculations */
+  max-width: 600px;          /* NEW: limit width so inner controls don't grow too large */
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 80px;
+  overflow-x: hidden;        /* NEW: prevent accidental horizontal scroll */
+  border: 1px solid #a6e1ff;
+  border-radius: 8px;
+  background-color: #007bff56;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.add-payment h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #003f8c;
+}
+
+/* allow form to use full width of container */
+.add-payment form {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-sizing: border-box;    /* NEW */
+}
+
+/* ensure form groups don't force overflow in flex containers */
+.add-payment .form-group {
+  min-width: 0;              /* NEW: allows children to shrink */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-payment form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Make inputs/selects fully responsive */
+.add-payment form input,
+.add-payment form select,
+.add-payment form textarea {
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;               /* NEW: fill the parent width */
+  max-width: 100%;           /* NEW */
+  box-sizing: border-box;    /* NEW */
+  min-width: 0;              /* NEW: prevents intrinsic min-width overflow */
+  background-color: #007bff50;
+  display: block;
+}
+
+/* Improve select appearance and avoid native dropdown forcing overflow */
+.add-payment form select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 36px; /* space for custom arrow */
+  background-image:
+    linear-gradient(45deg, transparent 50%, rgba(0,0,0,0.25) 50%),
+    linear-gradient(135deg, rgba(0,0,0,0.25) 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 13px) calc(1em + 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+/* Buttons */
+.add-payment form button {
+  padding: 12px;
+  background-color: #1e72f1;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-payment form button:hover {
+  background-color: #4a93ff;
+}
+
+/* Status messages */
+.status-message {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.status-message.success {
+  color: green;
+}
+
+.status-message.error {
+  color: red;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .add-payment {
+    padding: 14px;
+    margin-top: 12px;
+  }
+
+  .add-payment form input,
+  .add-payment form select,
+  .add-payment form textarea {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  .add-payment form button {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+/* extra small screens */
+@media (max-width: 480px) {
+  .add-payment {
+    padding: 12px;
+  }
+
+  .add-payment form input,
+  .add-payment form select,
+  .add-payment form textarea {
+    padding: 8px;
+    font-size: 14px;
+  }
+}
