@@ -15,7 +15,7 @@ const ViewAllLoans = () => {
   useEffect(() => {
     const fetchLoans = async () => {
       try {
-        const response = await axios.get('https://hiru-captial-investment.onrender.com/api/loan');
+        const response = await axios.get('https://hiru-captial-investment-pvt.onrender.com/api/loan');
         setLoans(response.data);
         setLoading(false);
       } catch (err) {
@@ -29,7 +29,7 @@ const ViewAllLoans = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://hiru-captial-investment.onrender.com/api/loan/${id}`);
+      await axios.delete(`https://hiru-captial-investment-pvt.onrender.com/api/loan/${id}`);
       setLoans(loans.filter(loan => loan._id !== id));
     } catch (err) {
       setError('An error occurred while deleting the loan.');
@@ -47,7 +47,7 @@ const ViewAllLoans = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`https://hiru-captial-investment.onrender.com/api/loan/${editLoan._id}`, editLoan);
+      await axios.put(`https://hiru-captial-investment-pvt.onrender.com/api/loan/${editLoan._id}`, editLoan);
       setLoans(loans.map(loan => (loan._id === editLoan._id ? editLoan : loan)));
       setEditLoan(null);
     } catch (err) {

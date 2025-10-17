@@ -20,7 +20,7 @@ const Login = () => {
     setError('');
     setMessage('');
 
-    const apiURL = 'https://hiru-captial-investment.onrender.com/api/users/login'; // Adjust this URL to your backend
+    const apiURL = 'https://hiru-captial-investment-pvt.onrender.com/api/users/login'; // Adjust this URL to your backend
 
     try {
       const response = await axios.post(apiURL, {

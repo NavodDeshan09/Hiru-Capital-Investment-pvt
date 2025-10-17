@@ -32,7 +32,7 @@ const AddLoan = () => {
     const fetchCustomers = async () => {
       try {
         const response = await axios.get(
-          'https://hiru-captial-investment.onrender.com/api/customers'
+          'https://hiru-captial-investment-pvt.onrender.com/api/customers'
         );
         setCustomers(response.data);
       } catch (error) {
@@ -98,7 +98,7 @@ const AddLoan = () => {
 
     try {
       const response = await axios.post(
-        'https://hiru-captial-investment.onrender.com/api/loan/createLoan',
+        'https://hiru-captial-investment-pvt.onrender.com/api/loan/createLoan',
         formData,
         { headers: { 'Content-Type': 'application/json' } }
       );

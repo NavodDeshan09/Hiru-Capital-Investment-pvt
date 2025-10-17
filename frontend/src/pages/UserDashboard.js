@@ -25,7 +25,7 @@ const UserDashboard = () => {
           return;
         }
 
-        const response = await axios.get(`https://hiru-captial-investment.onrender.com/api/users/user/profile/${id}`, {
+        const response = await axios.get(`https://hiru-captial-investment-pvt.onrender.com/api/users/user/profile/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
