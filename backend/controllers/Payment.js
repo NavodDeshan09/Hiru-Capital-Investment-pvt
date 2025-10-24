@@ -19,6 +19,37 @@ const updateLoanPayments = async (LoanID) => {
   }
 };
 
+// generate 4-digit candidate
+const generateReceiptCandidate = () => Math.floor(1000 + Math.random() * 9000).toString();
+
+// Save Payment with retry on duplicate receiptNumber key error
+const savePaymentWithRetry = async (paymentDoc, maxAttempts = 5) => {
+  let attempts = 0;
+  while (attempts < maxAttempts) {
+    try {
+      const saved = await paymentDoc.save();
+      return saved;
+    } catch (err) {
+      // Duplicate key error (receiptNumber collision)
+      if (err && (err.code === 11000 || (err.name === 'MongoServerError' && err.code === 11000))) {
+        // if duplicate key relates to receiptNumber, regenerate and retry
+        const dupField = err.keyPattern ? Object.keys(err.keyPattern)[0] : null;
+        if (dupField === 'receiptNumber' || err.message?.includes('receiptNumber')) {
+          // assign a new candidate and retry
+          paymentDoc.receiptNumber = generateReceiptCandidate();
+          attempts += 1;
+          continue;
+        }
+      }
+      // other errors -> rethrow
+      throw err;
+    }
+  }
+  // final attempt: let Mongoose pre-validate fallback (timestamp-derived) run by clearing receiptNumber
+  paymentDoc.receiptNumber = String(Date.now()).slice(-4);
+  return paymentDoc.save();
+};
+
 // Create a new payment
 const createPayment = async (req, res) => {
   try {
@@ -46,15 +77,17 @@ const createPayment = async (req, res) => {
       date: new Date(date), // Ensure the correct payment date is saved
     });
 
-    await newPayment.save();
+    // Save with retry for unique receiptNumber
+    const savedPayment = await savePaymentWithRetry(newPayment);
 
     // Update the loan's total payment and due payment
     await updateLoanPayments(LoanID);
 
-    res.status(201).json({ message: 'Payment created successfully!', payment: newPayment });
+    res.status(201).json({ message: 'Payment created successfully!', payment: savedPayment });
   } catch (error) {
     console.error('Error creating payment:', error);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    const status = error && (error.code === 11000 || error.name === 'MongoServerError') ? 409 : 500;
+    res.status(status).json({ message: 'Internal server error', error: error.message });
   }
 };
 
@@ -164,15 +197,16 @@ const addPayment = async (req, res) => {
     // Save the payment
     const payment = new Payment({
       ...req.body,
-      customerID: customer._id, // Associate the payment with the customer
+      customerID: customer._1d, // Associate the payment with the customer
       date: new Date(date), // Ensure the correct payment date is saved
     });
-    await payment.save();
+    // Note: use save-with-retry to handle rare receipt collisions
+    const saved = await savePaymentWithRetry(payment);
 
     // Update the loan's total payment and due payment
     await updateLoanPayments(LoanID);
 
-    res.status(201).json({ message: 'Payment added successfully and loan updated', payment });
+    res.status(201).json({ message: 'Payment added successfully and loan updated', payment: saved });
   } catch (error) {
     console.error('Error adding payment:', error);
     res.status(500).json({ message: 'Server error', error: error.message });

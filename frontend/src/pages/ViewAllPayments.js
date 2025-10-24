@@ -72,6 +72,7 @@ const ViewAllPayments = () => {
               {/* <th>Payment ID</th>
               <th>Loan ID</th> */}
               <th>No</th> {/* sequence column */}
+              <th>Reference</th> {/* new reference/receipt column */}
               <th>Customer Name</th>
               <th>Customer Address</th>
               <th>ID Number</th>
@@ -87,6 +88,7 @@ const ViewAllPayments = () => {
                 {/* <td>{payment._id}</td>
                 <td>{payment.LoanID}</td> */}
                 <td className="seq-col">{index + 1}</td> {/* sequence cell */}
+                <td>{payment.receiptNumber || payment.receiptNo || 'N/A'}</td>
                 <td>{payment.customerID?.fullName || 'N/A'}</td> {/* Display customer name */}
                 <td>{payment.customerID?.address || 'N/A'}</td> {/* Display customer address */}
                 <td>{payment.idNumber}</td>
