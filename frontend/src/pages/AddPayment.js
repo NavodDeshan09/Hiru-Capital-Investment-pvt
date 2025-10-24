@@ -76,20 +76,11 @@ const AddPayment = () => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  // generate a unique receipt number: RCP-YYYYMMDDHHMMSS-XXXX
-  const generateReceiptNumber = () => {
-    const now = new Date();
-    const ts = now.toISOString().replace(/[-:.TZ]/g, '').slice(0, 14); // YYYYMMDDHHMMSS
-    const rand = Math.floor(1000 + Math.random() * 9000); // 4 digit random
-    return `RCP-${ts}-${rand}`;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // create and attach a unique receipt number for this payment
-      const receiptNumber = generateReceiptNumber();
-      const payload = { ...formData, receiptNumber };
+      // send form data to backend; backend will generate a unique 4-digit receiptNumber
+      const payload = { ...formData };
 
       const response = await axios.post('https://hiru-captial-investment-pvt.onrender.com/api/payment', payload, {
         headers: {
@@ -97,10 +88,13 @@ const AddPayment = () => {
         },
       });
 
-      setStatusMessage({ type: 'success', text: response.data.message || `Payment saved. Receipt #: ${receiptNumber}` });
+      // response expected to include created payment in response.data.payment
+      const created = response.data?.payment || response.data;
+      const receiptRef = created?.receiptNumber || created?.receiptNo || 'N/A';
+      setStatusMessage({ type: 'success', text: response.data.message || `Payment saved. Receipt #: ${receiptRef}` });
 
-      // Generate receipt PDF using payload that includes the receiptNumber
-      generateReceipt(payload);
+      // Generate receipt PDF using server-returned payment (so it includes the receiptNumber)
+      generateReceipt(created);
 
       // Clear the form
       setFormData({
@@ -134,7 +128,7 @@ const AddPayment = () => {
     doc.text('Hiru Capital Investment pvt', 20, 30);
     doc.text('Payment Receipt', 20, 20);
     doc.setFontSize(12);
-    doc.text(`Receipt No: ${data.receiptNumber || 'N/A'}`, 20, 36);
+    doc.text(`Receipt No: ${data.receiptNumber || data.receiptNo || 'N/A'}`, 20, 36);
     doc.text(`Full Name: ${data.fullName}`, 20, 46);
     doc.text(`Loan ID: ${data.LoanID}`, 20, 56);
     doc.text(`Address: ${data.address}`, 20, 66);
@@ -145,7 +139,7 @@ const AddPayment = () => {
     doc.text(`Receipt Issued At: ${issueDate} ${issueTime}`, 20, 116); // Add receipt issue time
 
     // Save the receipt as a PDF with receipt number in filename
-    const filename = `Payment_Receipt_${data.receiptNumber || Date.now()}.pdf`;
+    const filename = `Payment_Receipt_${data.receiptNumber || data.receiptNo || Date.now()}.pdf`;
     doc.save(filename);
   };
 
