@@ -11,6 +11,8 @@ const ViewAllLoans = () => {
   const [error, setError] = useState('');
   const [editLoan, setEditLoan] = useState(null);
   const [viewLoan, setViewLoan] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [notification, setNotification] = useState(null); // { type: 'success'|'error', message: string }
 
   useEffect(() => {
     const fetchLoans = async () => {
@@ -46,12 +48,43 @@ const ViewAllLoans = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    setNotification(null);
     try {
-      await axios.put(`https://hiru-captial-investment-pvt.onrender.com/api/loan/${editLoan._id}`, editLoan);
-      setLoans(loans.map(loan => (loan._id === editLoan._id ? editLoan : loan)));
+      // Normalize numeric/date fields so API receives correct types and ensure fine defaults to 0
+      const normalized = {
+        ...editLoan,
+        amount: editLoan.amount !== undefined && editLoan.amount !== '' ? Number(editLoan.amount) : 0,
+        installment: editLoan.installment !== undefined && editLoan.installment !== '' ? Number(editLoan.installment) : 0,
+        installmentrate: editLoan.installmentrate !== undefined && editLoan.installmentrate !== '' ? Number(editLoan.installmentrate) : 0,
+        interest: editLoan.interest !== undefined && editLoan.interest !== '' ? Number(editLoan.interest) : 0,
+        totalPayment: editLoan.totalPayment !== undefined && editLoan.totalPayment !== '' ? Number(editLoan.totalPayment) : 0,
+        duePayment: editLoan.duePayment !== undefined && editLoan.duePayment !== '' ? Number(editLoan.duePayment) : 0,
+        fine: editLoan.fine !== undefined && editLoan.fine !== '' ? Number(editLoan.fine) : 0,
+        loanEndDate: editLoan.loanEndDate ? new Date(editLoan.loanEndDate).toISOString() : null,
+        createDate: editLoan.createDate ? new Date(editLoan.createDate).toISOString() : null,
+      };
+
+      const response = await axios.put(
+        `https://hiru-captial-investment-pvt.onrender.com/api/loan/${editLoan._id}`,
+        normalized
+      );
+
+      const updatedLoan = response?.data ?? normalized;
+      // ensure mapping uses an id
+      const id = updatedLoan._id ?? editLoan._id;
+      setLoans(loans.map(loan => (loan._id === id ? { ...loan, ...updatedLoan } : loan)));
       setEditLoan(null);
+      setNotification({ type: 'success', message: 'Loan updated successfully.' });
     } catch (err) {
+      console.error('Update error:', err);
+      const msg = err?.response?.data?.message || err?.response?.data || err.message || 'An error occurred while updating the loan.';
+      setNotification({ type: 'error', message: String(msg) });
       setError('An error occurred while updating the loan.');
+    } finally {
+      setSubmitting(false);
+      // clear notification after a short delay
+      setTimeout(() => setNotification(null), 5000);
     }
   };
 
@@ -98,6 +131,11 @@ const ViewAllLoans = () => {
   return (
     <div className="ViewAllLoans" style={{ padding: '20px' }}>
       <h1>All Loans</h1>
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          {notification.message}
+        </div>
+      )}
 
       {loading ? (
         <p>Loading...</p>
@@ -112,6 +150,10 @@ const ViewAllLoans = () => {
                 <button className="modal-close" onClick={() => setEditLoan(null)} aria-label="Close">×</button>
                 <h3>Edit Loan</h3>
                 <form onSubmit={handleUpdate} className="modal-form">
+                  <label>
+                    ID:
+                    <input type="text" name="_id" value={editLoan._id || ''} disabled />
+                  </label>
                   <label>
                     Customer ID:
                     <input type="text" name="CustomerID" value={editLoan.CustomerID || ''} onChange={handleChange} required />
@@ -168,6 +210,17 @@ const ViewAllLoans = () => {
                     Interest:
                     <input type="number" name="interest" value={editLoan.interest || ''} onChange={handleChange} required />
                   </label>
+
+                  <label>
+                    Loan Type:
+                    <input type="text" name="loanType" value={editLoan.loanType || ''} onChange={handleChange} />
+                  </label>
+
+                  <label>
+                    Loan Duration:
+                    <input type="text" name="loanDuration" value={editLoan.loanDuration || ''} onChange={handleChange} />
+                  </label>
+
                   <label>
                     Loan End Date:
                     <input type="date" name="loanEndDate" value={editLoan.loanEndDate ? new Date(editLoan.loanEndDate).toISOString().split('T')[0] : ''} onChange={handleChange} required />
@@ -182,14 +235,14 @@ const ViewAllLoans = () => {
                   </label>
                   <label>
                     Fine:
-                    <input type="number" name="fine" value={editLoan.fine || ''} onChange={handleChange} required />
+                     <input type="number" name="fine" value={editLoan.fine ?? ''} onChange={handleChange} required />
                   </label>
                   <label>
                     Create Date:
                     <input type="date" name="createDate" value={editLoan.createDate ? new Date(editLoan.createDate).toISOString().split('T')[0] : ''} onChange={handleChange} required />
                   </label>
                   <div className="modal-actions">
-                    <button type="submit">Update Loan</button>
+                   <button type="submit" disabled={submitting}>{submitting ? 'Updating...' : 'Update Loan'}</button>
                     <button type="button" onClick={() => setEditLoan(null)}>Cancel</button>
                   </div>
                 </form>
@@ -219,13 +272,11 @@ const ViewAllLoans = () => {
                   <div className="view-field"><label>Installment</label><div className="value">{viewLoan.installment}</div></div>
                   <div className="view-field"><label>Installment Rate</label><div className="value">{viewLoan.installmentrate}</div></div>
                   <div className="view-field"><label>Interest</label><div className="value">{viewLoan.interest}</div></div>
+                  <div className='view-field'><label>Fine</label><div className="value">{viewLoan.fine ?? 0}</div></div>
+                  <div className="view-field"><label>Loan Type</label><div className="value">{viewLoan.loanType}</div></div>
+                  <div className="view-field"><label>Loan Duration</label><div className="value">{viewLoan.loanDuration}</div></div>
                   <div className="view-field"><label>Loan End Date</label><div className="value">{formatDate(viewLoan.loanEndDate)}</div></div>
                   <div className="view-field"><label>Create Date</label><div className="value">{formatDate(viewLoan.createDate)}</div></div>
-                  <div className="view-field"><label>Loan Type</label><div className="value">{viewLoan.loanType}</div></div>
-        <div className="view-field"><label>Loan Duration</label><div className="value">{viewLoan.loanDuration}</div></div>
-
-        <div className="view-field"><label>Loan End Date</label><div className="value">{formatDate(viewLoan.loanEndDate)}</div></div>
-        <div className="view-field"><label>Create Date</label><div className="value">{formatDate(viewLoan.createDate)}</div></div>
 
                   <div className="modal-actions">
                     <button type="button" onClick={() => setViewLoan(null)}>Close</button>
@@ -266,7 +317,7 @@ const ViewAllLoans = () => {
                     <td>{formatDate(loan.loanEndDate)}</td>
                     <td>{loan.totalPayment}</td>
                     <td>{loan.duePayment}</td>
-                    <td>{loan.fine}</td>
+                    <td>{loan.fine }</td>
                     <td>{formatDate(loan.createDate)}</td> {/* formatted dd/mm/yyyy */}
                     <td className="actions-cell">
                       <button
