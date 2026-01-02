@@ -15,7 +15,7 @@ const ViewAllCustomers = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get('https://hiru-captial-investment-pvt.onrender.com/api/customers');
+        const response = await axios.get('http://localhost:5000/api/customers');
         setCustomers(response.data);
         setLoading(false);
       } catch (err) {
@@ -31,7 +31,7 @@ const ViewAllCustomers = () => {
     setPaymentLoading(true);
     setPaymentError('');
     try {
-      const response = await axios.get(`https://hiru-captial-investment-pvt.onrender.com/api/customers/${fullName}/payments`);
+      const response = await axios.get(`http://localhost:5000/api/customers/${fullName}/payments`);
       setPaymentHistory(response.data);
       setSelectedCustomer(fullName);
       setPaymentLoading(false);

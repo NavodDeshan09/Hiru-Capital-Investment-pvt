@@ -22,7 +22,7 @@ const AddPayment = () => {
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
-        const response = await axios.get('https://hiru-captial-investment-pvt.onrender.com/api/customers');
+        const response = await axios.get('http://localhost:5000/api/customers');
         setCustomers(response.data);
       } catch (error) {
         console.error('Error fetching customers:', error);
@@ -47,7 +47,7 @@ const AddPayment = () => {
         }));
 
         try {
-          const response = await axios.get(`https://hiru-captial-investment-pvt.onrender.com/api/loan/customer/${selectedCustomer._id}`);
+          const response = await axios.get(`http://localhost:5000/api/loan/customer/${selectedCustomer._id}`);
           setLoans(response.data);
         } catch (error) {
           console.error('Error fetching loans:', error);
@@ -82,7 +82,7 @@ const AddPayment = () => {
       // send form data to backend; backend will generate a unique 4-digit receiptNumber
       const payload = { ...formData };
 
-      const response = await axios.post('https://hiru-captial-investment-pvt.onrender.com/api/payment', payload, {
+      const response = await axios.post('http://localhost:5000/api/payment', payload, {
         headers: {
           'Content-Type': 'application/json',
         },

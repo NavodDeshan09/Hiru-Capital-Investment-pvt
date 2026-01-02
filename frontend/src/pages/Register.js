@@ -36,7 +36,7 @@ const Register = () => {
 
     try {
       // Send a POST request to the backend
-      const response = await axios.post('https://hiru-captial-investment-pvt.onrender.com/api/users/register', formData);
+      const response = await axios.post('http://localhost:5000/api/users/register', formData);
 
       // Display success message if registration is successful
       setMessage(response.data.message);

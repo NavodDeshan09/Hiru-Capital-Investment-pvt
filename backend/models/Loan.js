@@ -41,6 +41,14 @@ const LoanSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  rootname: {
+    type: String,
+    required: true,
+  },
+  rootid: {
+    type: String,
+    required: true,
+  },
   amount: {
     type: Number,
     required: true,

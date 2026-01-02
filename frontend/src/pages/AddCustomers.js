@@ -53,7 +53,7 @@ const AddCustomers = () => {
     }
 
     try {
-      const response = await fetch('https://hiru-captial-investment-pvt.onrender.com/api/customers', {
+      const response = await fetch('http://localhost:5000/api/customers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
